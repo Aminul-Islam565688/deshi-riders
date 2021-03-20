@@ -24,7 +24,7 @@ function App() {
             <Link to='/destination'>Destination</Link>
             <Link to='/blog'>Blog</Link>
             <Link to='/contact'>Contact</Link>
-            {loggedInUser.isSignedIn?<a onClick={() => setLoggedInUser({})} href="#">LogOut</a>:<Link to='/login'>Login</Link>}
+            {loggedInUser.email?<a onClick={() => setLoggedInUser({})} href="#">LogOut</a>:<Link to='/login'>Login</Link>}
         </nav>
 
         <Switch>
