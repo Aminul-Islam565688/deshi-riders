@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+.nav-header{
+  display: inline;
+}
+nav a{
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  margin-right: 15px;
+}
+nav a:hover{
+  text-decoration: none;
+  color: black;
+}
+.nav-link{
+  display: inline;
+  position: relative;
+  top: 0;
+  right: -600px;
+}
+.nav-link a{
+  padding: 6px 10px;
+}
+.nav-link a:last-child{
+  background-color: #FF6E40;
+  color: white;
+  border-radius: 3px;
+}

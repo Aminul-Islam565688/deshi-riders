@@ -1,6 +1,7 @@
 import './App.css';
 import { createContext, useState } from 'react';
 import {BrowserRouter as Router, Switch, Route, Link, withRouter} from "react-router-dom";
+import logo from './images/deshiriders.png'
 import Home from './Components/Home/Home';
 import Header from './Components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,25 +18,34 @@ function App() {
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
-        <Header></Header>
+        <Link className='d-inline p-2' to='/home'><img style={{width:'200px'}} src={logo} alt=""/></Link>
+        <nav className='nav-link d-inline p-2'>
+            <Link to='/home'>Home</Link>
+            <Link to='/destination'>Destination</Link>
+            <Link to='/blog'>Blog</Link>
+            <Link to='/contact'>Contact</Link>
+            {loggedInUser.isSignedIn?<a onClick={() => setLoggedInUser({})} href="#">LogOut</a>:<Link to='/login'>Login</Link>}
+        </nav>
+
         <Switch>
-          <PrivateRoute path="/destination">
-            <Destination></Destination>
-          </PrivateRoute>
-          <Route path="/blog">
+          <Route path='/home'>
+            <Home></Home>
+          </Route>
+          
+          <Route path='/blog'>
             <Blog></Blog>
           </Route>
-          <Route path="/home">
-            <Home></Home>
-          </Route>
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
-          <Route path="/contact">
-            <Contact></Contact>
-          </Route>
+          <PrivateRoute path='/destination'>
+            <Destination></Destination>
+          </PrivateRoute>
           <Route path='/login'>
             <Login></Login>
+          </Route>
+          <Route path='/contact'>
+            <Contact></Contact>
+          </Route>
+          <Route exact path='/'>
+            <Home></Home>
           </Route>
         </Switch>
       </Router>

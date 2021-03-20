@@ -76,7 +76,7 @@ transform: translateX(-50%);
     cursor: pointer;
     position: relative;
     top: 50px;
-    left: 160px;
+    left: 268px;
     transition: 1s;
 }
 .loginWith-social:hover{

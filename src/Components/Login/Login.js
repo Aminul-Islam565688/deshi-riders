@@ -22,10 +22,12 @@ if (firebase.apps.length === 0) {
 }
 
 const Login = () => {
-  const { register, handleSubmit, watch, errors } = useForm();
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [newUser, setNewUser] = useState(false);
-
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
+  
   const [user, setUser] = useState({
     isSignedIn: false,
     name: '',
@@ -33,60 +35,63 @@ const Login = () => {
     photo: ''
   })
 
-  let history = useHistory();
-  let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/" } };
 
-  const onSubmit = data => {
-    if (newUser && data.password !== data.confirmPassword) {
-      alert("Passwords don't match");
-      const newUserInfo = { ...data };
-      newUserInfo.passwordMatch = true;
-      setUser(newUserInfo);
-    } else {
-      if (newUser) {
-        firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-          .then(res => {
-            const newUserInfo = { ...data };
-            newUserInfo.error = '';
-            newUserInfo.success = true;
-            newUserInfo.isSignedIn = true;
-            setUser(newUserInfo);
-            setLoggedInUser(newUserInfo);
-            updateUserInfo(data.name);
-            history.replace(from);
-          })
-          .catch((error) => {
-            const newUserInfo = { ...data };
-            newUserInfo.error = error.message;
-            newUserInfo.success = false;
-            newUserInfo.isSignedIn = false;
-            setUser(newUserInfo);
-            setLoggedInUser(newUserInfo)
-          });
-      }
-      if (!newUser) {
-        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-          .then((res) => {
-            const newUserInfo = { ...data };
-            newUserInfo.error = '';
-            newUserInfo.success = true;
-            newUserInfo.isSignedIn = true;
-            setUser(newUserInfo);
-            setLoggedInUser(newUserInfo)
-            console.log('signed in user info', res);
-            history.replace(from);
-          })
-          .catch((error) => {
-            const newUserInfo = { ...data };
-            newUserInfo.error = error.message;
-            newUserInfo.success = false;
-            newUserInfo.isSignedIn = false;
-            setUser(newUserInfo);
-            setLoggedInUser(newUserInfo)
-          });
-      }
+  const handleChange = (e) => {
+    let isFieldValid = true;
+    if(e.target.name === 'email'){
+      isFieldValid = /\S+@\S+\.\S+/.test(e.target.value);
+    };
+    if(e.target.name === 'password'){
+      const isPasswordValid = (e.target.value.length) > 6;
+      const passWordHasNumber = /\d{1}/.test(e.target.value)
+      isFieldValid = isPasswordValid && passWordHasNumber;
     }
+    if(isFieldValid){
+      const newUserInfo = {...user};
+      newUserInfo[e.target.name] = e.target.value;
+      setUser(newUserInfo);
+      }
+  }
+  
+  
+  const handleSubmit = (e) => {
+    if(newUser && user.email && user.password){
+      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+      .then(res => {
+        const newUserInfo = {...user};
+        newUserInfo.error = '';
+        newUserInfo.success = true;
+        setUser(newUserInfo);
+        setLoggedInUser(newUserInfo)
+        updateUserInfo(user.email)
+        history.replace(from);
+      })
+      .catch((error) => {
+        const newUserInfo = {...user};
+        newUserInfo.error = error.message;
+        newUserInfo.success = false;
+        setUser(newUserInfo);
+      });
+    }
+    if(!newUser && user.email && user.password){
+      firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+      .then((res) => {
+        const newUserInfo = {...user};
+        newUserInfo.error = '';
+        newUserInfo.success = true;
+        setUser(newUserInfo);
+        setLoggedInUser(newUserInfo)
+        console.log(user.name);
+        history.replace(from);
+      })
+      .catch((error) => {
+        const newUserInfo = {...user};
+        newUserInfo.error = error.message;
+        newUserInfo.success = false;
+        setUser(newUserInfo);
+      });
+    }
+    e.preventDefault();
   }
 
   const updateUserInfo = (name) => {
@@ -95,11 +100,11 @@ const Login = () => {
     user.updateProfile({
       displayName: name,
 
-    }).then(function () {
+    }).then(function() {
       console.log("User Name Updated Successfully");
-    }).catch(function (error) {
+    }).catch(function(error) {
       console.log(error);
-    })
+    });
   }
 
   const facebookProvider = new firebase.auth.FacebookAuthProvider();
@@ -118,6 +123,7 @@ const Login = () => {
           photo: photoURL,
         }
         setUser(signedInUser);
+        setLoggedInUser(signedInUser);
         history.replace(from);
       })
       .catch((err) => {
@@ -126,47 +132,21 @@ const Login = () => {
       });
   }
 
-  const handleSignOut = () => {
-    firebase.auth().signOut()
-      .then((res) => {
-        const user = {
-          isSignedIn: false,
-          name: '',
-          email: '',
-          password: '',
-          photo: '',
-          error: '',
-          success: false,
-        }
-        setUser(user);
-      })
-      .catch((error) => {
-      });
-  }
- console.log(loggedInUser.isSignedIn);
+
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         {newUser ? <h6>Create New User</h6> : <h6>Log In</h6>}
         {
-          newUser && <div>
-            <input className='main-input' type="text" name="name" placeholder='Name' id="" ref={register({ required: true })} />
-            {errors.name && <span style={{ color: 'red' }} className='error'>Name is required</span>}
-          </div>
+          newUser && <input onBlur={handleChange} className='main-input' type="text" name="name" placeholder='Name' id="" />
         }
-        <input className='main-input' type="email" name="email" placeholder='Email' id="" ref={register({ required: true, pattern: /^[^\s@]+@[^\s@]+$/ })} />
-        {errors.email && <span style={{ color: 'red' }} className='error'>Email is required</span>}
+        <input onBlur={handleChange} className='main-input' type="email" name="email" placeholder='Email' id=""/>
 
-        <input className='main-input' type="password" name="password" placeholder='Password' id="" ref={register({ required: true, pattern: /\d{1}/ })} />
-        {errors.password && <span style={{ color: 'red' }} className='error'>Password is required</span>}
+        <input onBlur={handleChange} className='main-input' type="password" name="password" placeholder='Password' id=""/>
 
         {
-          newUser && <div>
-            <input className='main-input' type="password" name="confirmPassword" placeholder='Confirm Password' id="" ref={register({ required: user.passwordMatch })} />
-            {errors.confirmPassword && <span style={{ color: 'red' }} className='error'>Password isn't Match</span>}
-          </div>
+          newUser && <input  onBlur={handleChange} className='main-input' type="password" name="confirmPassword" placeholder='Confirm Password' id=""/>
         }
-
 
         {newUser || <div className='remember-forget-password'>
           <input type="checkbox" name="rememberMe" id="" />
