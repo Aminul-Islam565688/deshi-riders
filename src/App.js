@@ -1,12 +1,6 @@
 import './App.css';
 import { createContext, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  withRouter 
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, withRouter} from "react-router-dom";
 import Home from './Components/Home/Home';
 import Header from './Components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,29 +15,27 @@ export const UserContext = createContext();
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
   return (
-    <UserContext.Provider value={[loggedInUser, setLoggedInUser]} >
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
-      <Header></Header>
+        <Header></Header>
         <Switch>
-          <Route path='/home'>
-            <Home></Home>
-          </Route>
-          <PrivateRoute path='/destination'>
+          <PrivateRoute path="/destination">
             <Destination></Destination>
           </PrivateRoute>
-          <Route path='/blog'>
+          <Route path="/blog">
             <Blog></Blog>
           </Route>
-          <Route path='/contact'>
+          <Route path="/home">
+            <Home></Home>
+          </Route>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route path="/contact">
             <Contact></Contact>
           </Route>
           <Route path='/login'>
             <Login></Login>
-          </Route>
-          <Route exact path='/'>
-            <Home></Home>
-          </Route>
-          <Route path='*'>
           </Route>
         </Switch>
       </Router>
