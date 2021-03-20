@@ -1,0 +1,94 @@
+form{
+    width: 350px;
+    border: 1px solid white;
+    margin: 20px auto;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background-color: #ffffff5e;
+}
+.main-input{
+    width: 290px;
+    margin: 15px auto;
+    display: block;
+    border-bottom: 1px solid lightgrey;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background-color: #ffffff5e;
+    outline: none;
+}
+.submit-input{
+    width: 290px;
+    margin: auto;
+    display: block;
+    background-color: #FF6E40;
+    color: white;
+    border: none;
+    padding: 7px;
+
+}
+.forget-password{
+    color: #FF6E40;
+    position: relative;
+    left: 57px;
+}
+.create-account{
+    color: #FF6E40;
+}
+.have-account{
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.remember-forget-password{
+    margin-top: 15px;
+}
+a:hover{
+    text-decoration: none;
+    color: #FF6E40;
+}
+
+/* side line */
+
+.this:after,
+.this:before{
+    content:"\00a0\00a0\00a0\00a0\00a0";
+    text-decoration:line-through;
+    margin: auto 0.5em;
+}
+.this{
+    position: relative;
+    left: 45.5%;
+transform: translateX(-50%);
+}
+.loginWith-social{
+    border: 2px solid white;
+    color: black;
+    background-color: #ffffff5e;
+    width: 250px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 20px;
+    padding-top: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    top: 50px;
+    left: 160px;
+    transition: 1s;
+}
+.loginWith-social:hover{
+    background-color: white;
+}
+.loginWith-social img{
+    width: 40px;
+}
+.loginWith-social h5{
+    display: inline-block;
+    position: relative;
+    top: 3px;
+}
+.google{
+}
