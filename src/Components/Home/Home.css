@@ -7,17 +7,28 @@ body{
     background-size: cover;
     position: relative;
 }
+.ride{
+    display: grid;
+    grid-template-columns: repeat(4,250px);
+    justify-content: center;
+    margin-top: 160px;
+    grid-gap: 20px;
+}
 .ride-cart{
-    display: inline-block;
-    background-color: white;
-    margin: 100px 0 0 60px   ;
-    width: 240px;
-    height: 200px;
-    border-radius: 8px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: #ffffff00;
+    height: 250px;
     cursor: pointer;
 }
+.ride-cart:last-child{
+    margin-bottom: 50px;
+}
+.ride-cart:hover{
+    background-color: #ffffff80;
+}
 .ride-cart img{
-    width: 100px;
+    width: 150px;
     margin: auto;
     display: block;
     margin-top: 20px;
@@ -25,4 +36,14 @@ body{
 .ride-cart h4{
     margin-top: 30px;
     text-align: center;
+}
+
+@media(max-width:860px){
+    body{
+        height: fit-content;
+    }
+    .ride{
+        grid-template-columns: repeat(1,320px);
+        margin-top: 50px;
+    }
 }

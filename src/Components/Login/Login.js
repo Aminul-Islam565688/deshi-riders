@@ -158,13 +158,15 @@ const Login = () => {
         <span className='have-account'>Don't Have an Account?<a onClick={() => setNewUser(!newUser)} className='create-account' href="#">{newUser ? 'Log In' : 'Create an Account'}</a></span>
       </form>
       <span className='this'>Or</span>
-      <div onClick={() => handleSocialSignIn(facebookProvider)} className='loginWith-social google'>
-        <img src={facebook} alt="" />
-        <h5>Log In With Facebook</h5>
-      </div>
-      <div onClick={() => handleSocialSignIn(googleProvider)} className='loginWith-social facebook'>
-        <img src={google} alt="" />
-        <h5>Log In With Facebook</h5>
+      <div className='social-main'>
+        <div onClick={() => handleSocialSignIn(facebookProvider)} className='loginWith-social facebook'>
+          <img src={facebook} alt="" />
+          <h5>Log In With Facebook</h5>
+        </div>
+        <div onClick={() => handleSocialSignIn(googleProvider)} className='loginWith-social google'>
+          <img src={google} alt="" />
+          <h5>Log In With Google</h5>
+        </div>
       </div>
     </div>
   );

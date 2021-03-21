@@ -63,3 +63,21 @@ nav a:hover{
   color: white;
   border-radius: 3px;
 }
+.icon{
+  display: none;
+}
+@media(max-width:860px){
+  .nav-link a{
+    display: none;
+  }
+  .nav-link a.icon {
+    float: right;
+    display: block;
+  }
+  .nav-link{
+    right: 0;
+  }
+  .icon{
+    display: block;
+  }
+}

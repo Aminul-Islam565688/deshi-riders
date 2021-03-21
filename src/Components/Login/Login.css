@@ -1,7 +1,9 @@
 form{
     width: 350px;
     border: 1px solid white;
-    margin: 20px auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
     padding: 10px 30px;
     border-radius: 3px;
     background-color: #ffffff5e;
@@ -60,35 +62,43 @@ a:hover{
 }
 .this{
     position: relative;
-    left: 45.5%;
+    left: 46.5%;
 transform: translateX(-50%);
 }
+.social-main{
+    display: grid;
+    grid-template-columns: repeat(2,350px);
+    justify-content: center;
+}
 .loginWith-social{
-    border: 2px solid white;
-    color: black;
-    background-color: #ffffff5e;
-    width: 250px;
-    height: 50px;
-    display: inline-block;
-    margin-right: 20px;
-    padding-top: 2px;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    top: 50px;
-    left: 268px;
-    transition: 1s;
+    padding: 10px 20px;
+    margin: auto;
+    background-color: #ffffff80;
+    border: 1px solid white;
+    border-radius: 5px;
 }
 .loginWith-social:hover{
     background-color: white;
 }
 .loginWith-social img{
-    width: 40px;
+    width: 60px;
 }
 .loginWith-social h5{
     display: inline-block;
     position: relative;
     top: 3px;
 }
-.google{
+
+@media(max-width:860px){
+    .social-main{
+        grid-template-columns: repeat(1,350px);
+    }
+    .google{
+        width: 300px;
+        margin-top: 10px;
+        height: 78px;
+    }
+    .this{
+        left: 40%;
+    }
 }

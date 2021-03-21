@@ -3,13 +3,13 @@ import { createContext, useState } from 'react';
 import {BrowserRouter as Router, Switch, Route, Link, withRouter} from "react-router-dom";
 import logo from './images/deshiriders.png'
 import Home from './Components/Home/Home';
-import Header from './Components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Destination from './Components/Destination/Destination';
 import Blog from './Components/Blog/Blog';
 import Contact from './Components/Contact/Contact';
 import Login from './Components/Login/Login';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+
 
 export const UserContext = createContext();
 
@@ -18,6 +18,7 @@ function App() {
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
+        
         <Link className='d-inline p-2' to='/home'><img style={{width:'200px'}} src={logo} alt=""/></Link>
         <nav className='nav-link d-inline p-2'>
             <Link to='/home'>Home</Link>
